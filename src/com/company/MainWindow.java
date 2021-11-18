@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.awt.event.*;
 
 
@@ -15,6 +16,11 @@ class MainWindow implements ActionListener {
         JMenuItem openFile = new JMenuItem("Open file");
         JMenuItem saveFile = new JMenuItem("Save file");
         JMenuItem saveAsFile = new JMenuItem("Save file as...");
+
+        newFile.setBackground(Theme.bgMenuItem);
+        openFile.setBackground(Theme.bgMenuItem);
+        saveFile.setBackground(Theme.bgMenuItem);
+        saveAsFile.setBackground(Theme.bgMenuItem);
 
         file.add(newFile);
         file.add(openFile);
@@ -39,6 +45,9 @@ class MainWindow implements ActionListener {
         JMenuItem findEdit = new JMenuItem("Find");
         JMenuItem replaceEdit = new JMenuItem("Find and Replace");
 
+        findEdit.setBackground(Theme.bgMenuItem);
+        replaceEdit.setBackground(Theme.bgMenuItem);
+
         edit.add(findEdit);
         edit.add(replaceEdit);
 
@@ -50,6 +59,26 @@ class MainWindow implements ActionListener {
 
         menu.add(edit);
     }
+    private void createThemeMenu(JMenuBar menu){
+        JMenu edit = new JMenu("Select Theme");
+
+        JMenuItem firstTheme = new JMenuItem("Spring");
+        JMenuItem secondTheme = new JMenuItem("Autumn");
+
+        firstTheme.setBackground(Theme.bgMenuItem);
+        secondTheme.setBackground(Theme.bgMenuItem);
+
+        edit.add(firstTheme);
+        edit.add(secondTheme);
+
+        firstTheme.addActionListener(this);
+        secondTheme.addActionListener(this);
+
+        firstTheme.setActionCommand(firstTheme.getText());
+        secondTheme.setActionCommand(secondTheme.getText());
+
+        menu.add(edit);
+    }
 
     MainWindow() {
         w = new JFrame("notebook");
@@ -57,23 +86,51 @@ class MainWindow implements ActionListener {
         w.setLocationRelativeTo(null);
         w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        textArea = new TextArea(w);
+        textArea = new TextArea();
+        w.getContentPane().add(new JScrollPane(textArea));
 
         JMenuBar menu = new JMenuBar();
         createFileMenu(menu);
         createEditMenu(menu);
+        createThemeMenu(menu);
+        menu.setBackground(Theme.bgMenu);
         w.setJMenuBar(menu);
 
+        Theme theme = new Theme();
         w.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e){
         String command = e.getActionCommand();
         switch (command){
-            case "newFile" -> textArea.newFile();
-            case "openFile" -> textArea.openFile();
-            case "saveFile" -> textArea.saveFile();
-            case "saveAsFile" -> textArea.saveAsFile();
+            case "newFile" -> {
+                try {
+                    textArea.newFile();
+                } catch (BadLocationException badLocationException) {
+                    badLocationException.printStackTrace();
+                }
+            }
+            case "openFile" -> {
+                try {
+                    textArea.openFile();
+                } catch (BadLocationException badLocationException) {
+                    badLocationException.printStackTrace();
+                }
+            }
+            case "saveFile" -> {
+                try {
+                    textArea.saveFile();
+                } catch (BadLocationException badLocationException) {
+                    badLocationException.printStackTrace();
+                }
+            }
+            case "saveAsFile" -> {
+                try {
+                    textArea.saveAsFile();
+                } catch (BadLocationException badLocationException) {
+                    badLocationException.printStackTrace();
+                }
+            }
             case "findEdit" -> {
                 Dialog dialog = new Dialog(w, Dialog.FIND_DIALOG);
             }

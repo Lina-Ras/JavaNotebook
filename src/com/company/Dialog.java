@@ -1,12 +1,11 @@
 package com.company;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.text.BadLocationException;
+import java.awt.event.*;
 
 public class Dialog {
     private JDialog dialog;
-    private int type;
     private int width;
     private int height;
 
@@ -69,14 +68,12 @@ public class Dialog {
 
     }
 
-    public Dialog(JFrame w, int typet, int wt, int ht){
+    public Dialog(JFrame w, int type, int wt, int ht){
         dialog = new JDialog(w);
-
         width = wt;
         height = ht;
         dialog.setSize(width,height);
 
-        type = typet;
         switch (type) {
             case FIND_DIALOG -> {
                 loadFindDialog();
@@ -90,13 +87,38 @@ public class Dialog {
             public void actionPerformed(ActionEvent e) {
                 switch (e.getActionCommand()){
                     case "find" -> {
-                        if(textFind.getText() != null)
-                            MainWindow.textArea.find(textFind.getText());
+                        try {
+                            MainWindow.textArea.deleteHighlight();
+                        } catch (BadLocationException badLocationException) {
+                            badLocationException.printStackTrace();
+                        }
+                        if(textFind.getText() != null) {
+                            try {
+                                MainWindow.textArea.find(textFind.getText());
+                            } catch (BadLocationException badLocationException) {
+                                badLocationException.printStackTrace();
+                            }
+                        }
                     }
                     case "replace" ->{
-                        if(textFind.getText() != null)
-                            MainWindow.textArea.replace(textFind.getText(), textReplace.getText());
+                        if(textFind.getText() != null) {
+                            try {
+                                MainWindow.textArea.replace(textFind.getText(), textReplace.getText());
+                            } catch (BadLocationException badLocationException) {
+                                badLocationException.printStackTrace();
+                            }
+                        }
                     }
+                }
+            }
+        });
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    MainWindow.textArea.deleteHighlight();
+                } catch (BadLocationException badLocationException) {
+                    badLocationException.printStackTrace();
                 }
             }
         });

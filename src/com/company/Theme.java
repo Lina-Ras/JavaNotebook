@@ -12,9 +12,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Theme {
+    static String name;
     static List<WordsAttributes> WA;
     static int KEY_WORDS = 0;
     static int OTHER_WORDS = 1;
@@ -22,55 +24,43 @@ public class Theme {
 
     static SimpleAttributeSet highlightAttributes;
     
-    static Font defaultFont = new Font("Verdana", Font.PLAIN,18);
-    static Color Caret = new Color(139, 12, 84);
-    
-    static Color bgTextArea = new Color(106, 37, 135);
-    static Color bgMenu = new Color(39, 168, 121);
-    static Color bgMenuItem = new Color(39, 168, 121);
+    static Font defaultFont;
+    static Color caret;
+    static Color bgTextArea;
+    static Color bgMenu;
+    static Color bgMenuItem;
 
-    Theme(){
-//        keyWords = new ArrayList<>();
-//        keyWords.add("private");
-//        keyWords.add("cat");
-//
-//        otherWords = new ArrayList<>();
-//        otherWords.add("type");
-//        otherWords.add("ty");
-//
-//        keyWordsAttributes = new SimpleAttributeSet();
-//        StyleConstants.setBold(keyWordsAttributes, true);
-//        StyleConstants.setItalic(keyWordsAttributes, true);
-//        StyleConstants.setForeground(keyWordsAttributes, new Color(13, 80, 5));
-//        StyleConstants.setBackground(keyWordsAttributes, new Color(217, 215, 164));
-//
-//        otherWordsAttributes = new SimpleAttributeSet();
-//        StyleConstants.setBold(otherWordsAttributes, true);
-//        StyleConstants.setItalic(otherWordsAttributes, true);
-//        StyleConstants.setForeground(otherWordsAttributes, new Color(31, 177, 25));
-//        StyleConstants.setBackground(otherWordsAttributes, new Color(49, 7, 45));
-//
-//        defAttributes = new SimpleAttributeSet();
-//        highlightAttributes = new SimpleAttributeSet();
-//        StyleConstants.setBackground(highlightAttributes, new Color(161,227,206));
+    Theme() {
+        WA = new ArrayList<WordsAttributes>();
+        for(int i = 0; i <3; ++i){
+            WA.add(new WordsAttributes());
+        }
+
+        highlightAttributes = new SimpleAttributeSet();
     }
 
     private static Color getColor(String str){
         String[] rgb = str.split(",");
-        int r = Integer.getInteger(rgb[0]);
-        int g = Integer.getInteger(rgb[1]);
-        int b = Integer.getInteger(rgb[2]);
+        int r = Integer.parseInt(rgb[0]);
+        int g = Integer.parseInt(rgb[1]);
+        int b = Integer.parseInt(rgb[2]);
 
         return new Color(r,g,b);
     }
-    private boolean getBoolean(String str){
-        if(str.matches("true")) return true;
-        return false;
+    private static boolean getBoolean(String str){
+        return str.matches("true");
+    }
+    private static int getFontType(String str){
+        switch(str){
+            case("Font.BOLD") -> {return Font.BOLD;}
+            case("Font.ITALIC") -> {return Font.ITALIC;}
+            default -> {return Font.PLAIN;}
+        }
     }
 
-    static void updateThemeXML(String name){
+    static void updateThemeXML(String themeName){
         try {
-            File inputFile = new File("themes.xml");
+            File inputFile = new File("src/com/company/themes.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
@@ -81,13 +71,14 @@ public class Theme {
             Element eTheme = (Element) nTheme;
 
             for (int tmpThemes = 0; tmpThemes < nlThemes.getLength(); tmpThemes++) {
+                nTheme = nlThemes.item(tmpThemes);
                 if (nTheme.getNodeType() == Node.ELEMENT_NODE) {
                     eTheme = (Element) nTheme;
-                    if (eTheme.getAttribute("name").matches(name)) {
+                    if (eTheme.getAttribute("name").matches(themeName)) {
+                        name = themeName;
                         break;
                     }
                 }
-                nTheme = nlThemes.item(tmpThemes);
             }
 
             NodeList wordsAttributes = eTheme.getElementsByTagName("WordsAttributes");
@@ -95,14 +86,42 @@ public class Theme {
                 Node nWA = wordsAttributes.item(tmp);
                 if (nWA.getNodeType() == Node.ELEMENT_NODE) {
                     Element eWA = (Element) nWA;
-                            Color color;
-                            color = getColor(eWA.getElementsByTagName("bg").item(0).getTextContent());
-                            StyleConstants.setBackground(keyWordsAttributes, color);
-                            color = getColor(eWA.getElementsByTagName("fg").item(0).getTextContent());
-                            //StyleConstants.setBackground(keyWordsAttributes, color);
-                            color = getColor(eWA.getElementsByTagName("fg").item(0).getTextContent());
+                    Color color;
+                    color = getColor(eWA.getElementsByTagName("bg").item(0).getTextContent());
+                    StyleConstants.setBackground(WA.get(tmp), color);
+                    color = getColor(eWA.getElementsByTagName("fg").item(0).getTextContent());
+                    StyleConstants.setForeground(WA.get(tmp), color);
+                    boolean bool;
+                    bool = getBoolean(eWA.getElementsByTagName("bold").item(0).getTextContent());
+                    StyleConstants.setBold(WA.get(tmp), bool);
+                    bool = getBoolean(eWA.getElementsByTagName("italic").item(0).getTextContent());
+                    StyleConstants.setItalic(WA.get(tmp), bool);
+
+                    if(!eWA.getAttribute("type").matches("default")){
+                        String[] strTmp = eWA.getElementsByTagName("words").item(0).getTextContent().split(",");
+                        WA.get(tmp).words = Arrays.asList(strTmp);
                     }
                 }
+            }
+            Node nFont =  eTheme.getElementsByTagName("defaultFont").item(0);
+            if(nFont.getNodeType() == Node.ELEMENT_NODE){
+                Element eFont = (Element) nFont;
+                String fontName = eFont.getElementsByTagName("name").item(0).getTextContent();
+                int fontType = getFontType(eFont.getElementsByTagName("type").item(0).getTextContent());
+                int fontSize = Integer.parseInt(eFont.getElementsByTagName("size").item(0).getTextContent());
+                defaultFont = new Font(fontName, fontType, fontSize);
+            }
+
+            Node nColors = eTheme.getElementsByTagName("colors").item(0);
+            if(nFont.getNodeType() == Node.ELEMENT_NODE){
+                Element eColors = (Element) nColors;
+                caret = getColor(eColors.getElementsByTagName("caret").item(0).getTextContent());
+                bgTextArea = getColor(eColors.getElementsByTagName("bgTextArea").item(0).getTextContent());
+                bgMenu = getColor(eColors.getElementsByTagName("bgMenu").item(0).getTextContent());
+                bgMenuItem = getColor(eColors.getElementsByTagName("bgMenuItem").item(0).getTextContent());
+                Color color = getColor(eColors.getElementsByTagName("highlight").item(0).getTextContent());
+                StyleConstants.setBackground(highlightAttributes, color);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

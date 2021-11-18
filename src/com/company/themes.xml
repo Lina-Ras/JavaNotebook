@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themes>
+    <theme name="Spring">
+        <WordsAttributes type="key">
+            <bg>0,255,0</bg>
+            <fg>13,80,5</fg>
+            <bold>true</bold>
+            <italic>true</italic>
+            <words>private,public,cat</words>
+        </WordsAttributes>
+        <WordsAttributes type="other">
+            <bg>255,0,0</bg>
+            <fg>13,80,5</fg>
+            <bold>false</bold>
+            <italic>true</italic>
+            <words>ty,AAAAA</words>
+        </WordsAttributes>
+        <WordsAttributes type="default">
+            <bg>0,0,0</bg>
+            <fg>255,0,255</fg>
+            <bold>false</bold>
+            <italic>false</italic>
+            <words>default</words>
+        </WordsAttributes>
+        <defaultFont>
+            <name>Verdana</name>
+            <type>Font.PLAIN</type>
+            <size>18</size>
+        </defaultFont>
+        <colors>
+            <caret>12,12,12</caret>
+            <bgTextArea>45,45,45</bgTextArea>
+            <bgMenu>12,43,34</bgMenu>
+            <bgMenuItem>12,43,34</bgMenuItem>
+            <highlight>34,55,35</highlight>
+        </colors>
+    </theme>
+    <theme name="Autumn">
+        <WordsAttributes type="key">
+            <bg>0,0,0</bg>
+            <fg>13,80,5</fg>
+            <bold>true</bold>
+            <italic>true</italic>
+            <words>private,public,dog</words>
+        </WordsAttributes>
+        <WordsAttributes type="other">
+            <bg>0,0,0</bg>
+            <fg>13,80,5</fg>
+            <bold>false</bold>
+            <italic>true</italic>
+            <words>ty,AAAAA</words>
+        </WordsAttributes>
+        <WordsAttributes type="default">
+            <bg>0,0,0</bg>
+            <fg>0,0,0</fg>
+            <bold>false</bold>
+            <italic>false</italic>
+            <words>default</words>
+        </WordsAttributes>
+        <defaultFont>
+            <name>Verdana</name>
+            <type>Font.PLAIN</type>
+            <size>18</size>
+        </defaultFont>
+        <colors>
+            <caret>12,12,12</caret>
+            <bgTextArea>245,245,45</bgTextArea>
+            <bgMenu>12,43,34</bgMenu>
+            <bgMenuItem>12,43,34</bgMenuItem>
+            <highlight>34,25,35</highlight>
+        </colors>
+    </theme>
+</themes>

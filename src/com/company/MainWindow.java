@@ -86,6 +86,9 @@ class MainWindow implements ActionListener {
         w.setLocationRelativeTo(null);
         w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        Theme theme = new Theme();
+        Theme.updateThemeXML("Autumn");
+
         textArea = new TextArea();
         w.getContentPane().add(new JScrollPane(textArea));
 
@@ -96,7 +99,6 @@ class MainWindow implements ActionListener {
         menu.setBackground(Theme.bgMenu);
         w.setJMenuBar(menu);
 
-        Theme theme = new Theme();
         w.setVisible(true);
     }
 

@@ -89,7 +89,7 @@ public class TextArea extends JTextPane{
         txt = new ArrayList<>();
         setBackground(Theme.bgTextArea);
         setFont(Theme.defaultFont);
-        setCaretColor(Theme.Caret);
+        setCaretColor(Theme.caret);
 
         addKeyListener(new KeyAdapter() {
             @Override

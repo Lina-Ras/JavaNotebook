@@ -103,6 +103,17 @@ public class Dialog {
                 }
             }
         });
+
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    MainWindow.textArea.deleteHighlight();
+                } catch (BadLocationException badLocationException) {
+                    badLocationException.printStackTrace();
+                }
+            }
+        });
     }
 
     public Dialog(JFrame w, int typet){ new Dialog(w, typet, 400, 200); }

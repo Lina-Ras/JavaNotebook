@@ -17,6 +17,20 @@ public class TextArea extends JTextPane{
     private String path = "";
     private final DefaultStyledDocument document;
 
+    private void duplicateString() throws BadLocationException{
+        String txt = document.getText(0, document.getLength());
+        int start = getCaretPosition();
+        while (start != 0 && txt.charAt(start - 1) != '\n') {
+            --start;
+        }
+        int end = getCaretPosition();
+        while((end!= document.getLength() && txt.charAt(end-1) != '\n') || end==start){
+            ++end;
+        }
+        String toInsert = txt.substring(start, end);
+        document.insertString(end, '\n'+toInsert, null);
+        syntaxLineHighlight();
+    }
     private void save() throws BadLocationException {
         File file = new File(path);
         BufferedWriter output;
@@ -124,6 +138,13 @@ public class TextArea extends JTextPane{
                     case KeyEvent.VK_N ->{
                         try {
                             newFile();
+                        } catch (BadLocationException badLocationException) {
+                            badLocationException.printStackTrace();
+                        }
+                    }
+                    case KeyEvent.VK_D ->{
+                        try {
+                            duplicateString();
                         } catch (BadLocationException badLocationException) {
                             badLocationException.printStackTrace();
                         }

@@ -17,25 +17,12 @@ class MainWindow implements ActionListener {
         JMenuItem saveFile = new JMenuItem("Save file");
         JMenuItem saveAsFile = new JMenuItem("Save file as...");
 
-        newFile.setBackground(Theme.bgMenuItem);
-        openFile.setBackground(Theme.bgMenuItem);
-        saveFile.setBackground(Theme.bgMenuItem);
-        saveAsFile.setBackground(Theme.bgMenuItem);
-
         file.add(newFile);
         file.add(openFile);
         file.add(saveFile);
         file.add(saveAsFile);
 
-        newFile.addActionListener(this);
-        openFile.addActionListener(this);
-        saveFile.addActionListener(this);
-        saveAsFile.addActionListener(this);
-
-        newFile.setActionCommand("newFile");
-        openFile.setActionCommand("openFile");
-        saveFile.setActionCommand("saveFile");
-        saveAsFile.setActionCommand("saveAsFile");
+        addListenersToMenu(file);
 
         menu.add(file);
     }
@@ -45,39 +32,41 @@ class MainWindow implements ActionListener {
         JMenuItem findEdit = new JMenuItem("Find");
         JMenuItem replaceEdit = new JMenuItem("Find and Replace");
 
-        findEdit.setBackground(Theme.bgMenuItem);
-        replaceEdit.setBackground(Theme.bgMenuItem);
-
         edit.add(findEdit);
         edit.add(replaceEdit);
 
-        findEdit.addActionListener(this);
-        replaceEdit.addActionListener(this);
-
-        findEdit.setActionCommand("findEdit");
-        replaceEdit.setActionCommand("replaceEdit");
-
+        addListenersToMenu(edit);
         menu.add(edit);
     }
     private void createThemeMenu(JMenuBar menu){
-        JMenu edit = new JMenu("Select Theme");
+        JMenu themes = new JMenu("Select Theme");
 
         JMenuItem firstTheme = new JMenuItem("Spring");
         JMenuItem secondTheme = new JMenuItem("Autumn");
 
-        firstTheme.setBackground(Theme.bgMenuItem);
-        secondTheme.setBackground(Theme.bgMenuItem);
+        themes.add(firstTheme);
+        themes.add(secondTheme);
 
-        edit.add(firstTheme);
-        edit.add(secondTheme);
+        addListenersToMenu(themes);
 
-        firstTheme.addActionListener(this);
-        secondTheme.addActionListener(this);
-
-        firstTheme.setActionCommand(firstTheme.getText());
-        secondTheme.setActionCommand(secondTheme.getText());
-
-        menu.add(edit);
+        menu.add(themes);
+    }
+    private void updateTheme(){
+        JMenuBar menubar = w.getJMenuBar();
+        for(int i=0; i<menubar.getMenuCount(); ++i){
+            JMenu menu = menubar.getMenu(i);
+            for(int j=0; j<menu.getItemCount(); ++j){
+                menu.getItem(j).setBackground(Theme.bgMenuItem);
+            }
+        }
+        menubar.setBackground(Theme.bgMenu);
+    }
+    private void addListenersToMenu(JMenu menu){
+        for(int j=0; j<menu.getItemCount(); ++j){
+            JMenuItem item = menu.getItem(j);
+            item.addActionListener(this);
+            item.setActionCommand(item.getText());
+        }
     }
 
     MainWindow() throws BadLocationException {
@@ -86,8 +75,7 @@ class MainWindow implements ActionListener {
         w.setLocationRelativeTo(null);
         w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Theme theme = new Theme();
-        Theme.updateThemeXML("Autumn");
+        Theme.updateThemeXML("Spring");
 
         textArea = new TextArea();
         w.getContentPane().add(new JScrollPane(textArea));
@@ -96,64 +84,66 @@ class MainWindow implements ActionListener {
         createFileMenu(menu);
         createEditMenu(menu);
         createThemeMenu(menu);
-        menu.setBackground(Theme.bgMenu);
         w.setJMenuBar(menu);
 
+        updateTheme();
         w.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e){
         String command = e.getActionCommand();
         switch (command){
-            case "newFile" -> {
+            case "New file": {
                 try {
                     textArea.newFile();
                 } catch (BadLocationException badLocationException) {
                     badLocationException.printStackTrace();
                 }
+                break;
             }
-            case "openFile" -> {
+            case "Open file":{
                 try {
                     textArea.openFile();
                 } catch (BadLocationException badLocationException) {
                     badLocationException.printStackTrace();
                 }
+                break;
             }
-            case "saveFile" -> {
+            case "Save file": {
                 try {
                     textArea.saveFile();
                 } catch (BadLocationException badLocationException) {
                     badLocationException.printStackTrace();
                 }
+                break;
             }
-            case "saveAsFile" -> {
+            case "Save file as...": {
                 try {
                     textArea.saveAsFile();
                 } catch (BadLocationException badLocationException) {
                     badLocationException.printStackTrace();
                 }
+                break;
             }
-            case "findEdit" -> {
+            case "Find": {
                 Dialog dialog = new Dialog(w, Dialog.FIND_DIALOG);
+                break;
             }
-            case "replaceEdit" -> {
+            case "Find and Replace":{
                 Dialog dialog = new Dialog(w, Dialog.REPLACE_DIALOG);
+                break;
             }
-            case "Spring" -> {
-                Theme.updateThemeXML("Spring");
+            case "Spring": {
+            }
+            case "Autumn": {
+                Theme.updateThemeXML(command);
+                updateTheme();
                 try {
                     textArea.updateTheme();
                 } catch (BadLocationException badLocationException) {
                     badLocationException.printStackTrace();
                 }
-            }
-            case "Autumn" -> {
-                Theme.updateThemeXML("Autumn");
-                try {
-                    textArea.updateTheme();
-                } catch (BadLocationException badLocationException) {
-                    badLocationException.printStackTrace();
-                }
+                break;
             }
         }
     }

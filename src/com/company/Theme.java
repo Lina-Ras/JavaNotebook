@@ -31,12 +31,6 @@ public class Theme {
     static Color bgMenuItem;
 
     Theme() {
-        WA = new ArrayList<WordsAttributes>();
-        for(int i = 0; i <3; ++i){
-            WA.add(new WordsAttributes());
-        }
-
-        highlightAttributes = new SimpleAttributeSet();
     }
 
     private static Color getColor(String str){
@@ -66,6 +60,7 @@ public class Theme {
         for(int i = 0; i <3; ++i){
             WA.add(new WordsAttributes());
         }
+        highlightAttributes = new SimpleAttributeSet();
         try {
             File inputFile = new File("src/com/company/themes.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -77,15 +72,20 @@ public class Theme {
             Node nTheme = nlThemes.item(0);
             Element eTheme = (Element) nTheme;
 
+            boolean themeExist = false;
             for (int tmpThemes = 0; tmpThemes < nlThemes.getLength(); tmpThemes++) {
                 nTheme = nlThemes.item(tmpThemes);
                 if (nTheme.getNodeType() == Node.ELEMENT_NODE) {
                     eTheme = (Element) nTheme;
                     if (eTheme.getAttribute("name").matches(themeName)) {
                         name = themeName;
+                        themeExist = true;
                         break;
                     }
                 }
+            }
+            if(!themeExist){
+                return;
             }
             Node nColors = eTheme.getElementsByTagName("colors").item(0);
             if(nColors.getNodeType() == Node.ELEMENT_NODE){

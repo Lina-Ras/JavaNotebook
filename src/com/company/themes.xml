@@ -18,7 +18,7 @@
         <WordsAttributes type="other">
             <bg>none</bg>
             <fg>48,1,30</fg>
-            <bold>false</bold>
+            <bold>true</bold>
             <italic>true</italic>
             <words>\b\d*\b</words>
         </WordsAttributes>

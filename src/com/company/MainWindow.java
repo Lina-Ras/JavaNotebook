@@ -41,8 +41,8 @@ class MainWindow implements ActionListener {
     private void createThemeMenu(JMenuBar menu){
         JMenu themes = new JMenu("Select Theme");
 
-        JMenuItem firstTheme = new JMenuItem("Spring");
-        JMenuItem secondTheme = new JMenuItem("Autumn");
+        JMenuItem firstTheme = new JMenuItem("Meow");
+        JMenuItem secondTheme = new JMenuItem("Dog");
 
         themes.add(firstTheme);
         themes.add(secondTheme);

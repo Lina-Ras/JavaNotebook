@@ -48,6 +48,8 @@ class MainWindow implements ActionListener {
         themes.add(secondTheme);
 
         addListenersToMenu(themes);
+        firstTheme.setActionCommand("First");
+        secondTheme.setActionCommand("Second");
 
         menu.add(themes);
     }
@@ -75,7 +77,7 @@ class MainWindow implements ActionListener {
         w.setLocationRelativeTo(null);
         w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Theme.updateThemeXML("Spring");
+        Theme.updateThemeXML("First");
 
         textArea = new TextArea();
         w.getContentPane().add(new JScrollPane(textArea));
@@ -133,9 +135,9 @@ class MainWindow implements ActionListener {
                 Dialog dialog = new Dialog(w, Dialog.REPLACE_DIALOG);
                 break;
             }
-            case "Spring": {
+            case "First": {
             }
-            case "Autumn": {
+            case "Second": {
                 Theme.updateThemeXML(command);
                 updateTheme();
                 try {

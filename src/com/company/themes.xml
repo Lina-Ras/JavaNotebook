@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <themes>
-    <theme name="Spring">
+    <theme name="First">
         <colors>
             <caret>12,12,12</caret>
-            <bgTextArea>45,45,45</bgTextArea>
-            <bgMenu>12,43,34</bgMenu>
-            <bgMenuItem>12,43,34</bgMenuItem>
-            <highlight>34,55,35</highlight>
+            <bgTextArea>215,252,212</bgTextArea>
+            <bgMenu>182,204,161</bgMenu>
+            <bgMenuItem>199,228,187</bgMenuItem>
+            <highlight>194,155,32</highlight>
         </colors>
         <WordsAttributes type="key">
-            <bg>0,255,0</bg>
-            <fg>13,80,5</fg>
+            <bg>208,216,145</bg>
+            <fg>48,1,30</fg>
             <bold>true</bold>
-            <italic>true</italic>
+            <italic>false</italic>
             <words>private,public,cat</words>
         </WordsAttributes>
         <WordsAttributes type="other">
-            <bg>255,0,0</bg>
-            <fg>13,80,5</fg>
+            <bg>none</bg>
+            <fg>48,1,30</fg>
             <bold>false</bold>
             <italic>true</italic>
-            <words>ty,AAAAA</words>
+            <words>\b\d*\b</words>
         </WordsAttributes>
         <WordsAttributes type="default">
             <bg>none</bg>
-            <fg>255,0,255</fg>
+            <fg>84,58,57</fg>
             <bold>false</bold>
             <italic>false</italic>
-            <words>default</words>
+            <words>-</words>
         </WordsAttributes>
         <defaultFont>
             <name>Verdana</name>
@@ -35,39 +35,39 @@
             <size>18</size>
         </defaultFont>
     </theme>
-    <theme name="Autumn">
+    <theme name="Second">
         <colors>
-            <caret>12,12,12</caret>
-            <bgTextArea>245,245,45</bgTextArea>
-            <bgMenu>12,43,34</bgMenu>
-            <bgMenuItem>12,43,34</bgMenuItem>
-            <highlight>34,25,35</highlight>
+            <caret>114,169,143</caret>
+            <bgTextArea>255,243,240</bgTextArea>
+            <bgMenu>144,70,207</bgMenu>
+            <bgMenuItem>201,124,203</bgMenuItem>
+            <highlight>253,225,45</highlight>
         </colors>
         <WordsAttributes type="key">
-            <bg>0,0,0</bg>
-            <fg>13,80,5</fg>
+            <bg>none</bg>
+            <fg>144,70,207</fg>
             <bold>true</bold>
             <italic>true</italic>
             <words>private,public,dog</words>
         </WordsAttributes>
         <WordsAttributes type="other">
-            <bg>0,0,0</bg>
-            <fg>13,80,5</fg>
+            <bg>none</bg>
+            <fg>244,135,182</fg>
             <bold>false</bold>
             <italic>true</italic>
-            <words>ty,AAAAA</words>
+            <words>LR,\b\d*\b</words>
         </WordsAttributes>
         <WordsAttributes type="default">
-            <bg>0,0,0</bg>
-            <fg>0,0,0</fg>
+            <bg>none</bg>
+            <fg>66,62,55</fg>
             <bold>false</bold>
             <italic>false</italic>
-            <words>default</words>
+            <words>-</words>
         </WordsAttributes>
         <defaultFont>
             <name>Verdana</name>
             <type>Font.PLAIN</type>
-            <size>18</size>
+            <size>20</size>
         </defaultFont>
     </theme>
 </themes>

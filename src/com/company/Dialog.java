@@ -88,37 +88,18 @@ public class Dialog {
                 switch (e.getActionCommand()){
                     case "find" -> {
                         try {
-                            MainWindow.textArea.deleteHighlight();
+                            MainWindow.textArea.find(textFind.getText());
                         } catch (BadLocationException badLocationException) {
                             badLocationException.printStackTrace();
                         }
-                        if(textFind.getText() != null) {
-                            try {
-                                MainWindow.textArea.find(textFind.getText());
-                            } catch (BadLocationException badLocationException) {
-                                badLocationException.printStackTrace();
-                            }
-                        }
                     }
                     case "replace" ->{
-                        if(textFind.getText() != null) {
-                            try {
-                                MainWindow.textArea.replace(textFind.getText(), textReplace.getText());
-                            } catch (BadLocationException badLocationException) {
-                                badLocationException.printStackTrace();
-                            }
+                        try {
+                            MainWindow.textArea.replace(textFind.getText(), textReplace.getText());
+                        } catch (BadLocationException badLocationException) {
+                            badLocationException.printStackTrace();
                         }
                     }
-                }
-            }
-        });
-        dialog.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                try {
-                    MainWindow.textArea.deleteHighlight();
-                } catch (BadLocationException badLocationException) {
-                    badLocationException.printStackTrace();
                 }
             }
         });

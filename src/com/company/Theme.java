@@ -40,6 +40,9 @@ public class Theme {
     }
 
     private static Color getColor(String str){
+        if(str.matches("none")){
+            return bgTextArea;
+        }
         String[] rgb = str.split(",");
         int r = Integer.parseInt(rgb[0]);
         int g = Integer.parseInt(rgb[1]);
@@ -59,6 +62,10 @@ public class Theme {
     }
 
     static void updateThemeXML(String themeName){
+        WA = new ArrayList<WordsAttributes>();
+        for(int i = 0; i <3; ++i){
+            WA.add(new WordsAttributes());
+        }
         try {
             File inputFile = new File("src/com/company/themes.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -80,9 +87,19 @@ public class Theme {
                     }
                 }
             }
+            Node nColors = eTheme.getElementsByTagName("colors").item(0);
+            if(nColors.getNodeType() == Node.ELEMENT_NODE){
+                Element eColors = (Element) nColors;
+                caret = getColor(eColors.getElementsByTagName("caret").item(0).getTextContent());
+                bgTextArea = getColor(eColors.getElementsByTagName("bgTextArea").item(0).getTextContent());
+                bgMenu = getColor(eColors.getElementsByTagName("bgMenu").item(0).getTextContent());
+                bgMenuItem = getColor(eColors.getElementsByTagName("bgMenuItem").item(0).getTextContent());
+                Color color = getColor(eColors.getElementsByTagName("highlight").item(0).getTextContent());
+                StyleConstants.setBackground(highlightAttributes, color);
+            }
 
             NodeList wordsAttributes = eTheme.getElementsByTagName("WordsAttributes");
-            for(int tmp = 0; tmp < wordsAttributes.getLength(); tmp++){
+            for(int tmp = 0; tmp < wordsAttributes.getLength(); tmp++) {
                 Node nWA = wordsAttributes.item(tmp);
                 if (nWA.getNodeType() == Node.ELEMENT_NODE) {
                     Element eWA = (Element) nWA;
@@ -97,12 +114,13 @@ public class Theme {
                     bool = getBoolean(eWA.getElementsByTagName("italic").item(0).getTextContent());
                     StyleConstants.setItalic(WA.get(tmp), bool);
 
-                    if(!eWA.getAttribute("type").matches("default")){
+                    if (!eWA.getAttribute("type").matches("default")) {
                         String[] strTmp = eWA.getElementsByTagName("words").item(0).getTextContent().split(",");
                         WA.get(tmp).words = Arrays.asList(strTmp);
                     }
                 }
             }
+
             Node nFont =  eTheme.getElementsByTagName("defaultFont").item(0);
             if(nFont.getNodeType() == Node.ELEMENT_NODE){
                 Element eFont = (Element) nFont;
@@ -112,16 +130,6 @@ public class Theme {
                 defaultFont = new Font(fontName, fontType, fontSize);
             }
 
-            Node nColors = eTheme.getElementsByTagName("colors").item(0);
-            if(nFont.getNodeType() == Node.ELEMENT_NODE){
-                Element eColors = (Element) nColors;
-                caret = getColor(eColors.getElementsByTagName("caret").item(0).getTextContent());
-                bgTextArea = getColor(eColors.getElementsByTagName("bgTextArea").item(0).getTextContent());
-                bgMenu = getColor(eColors.getElementsByTagName("bgMenu").item(0).getTextContent());
-                bgMenuItem = getColor(eColors.getElementsByTagName("bgMenuItem").item(0).getTextContent());
-                Color color = getColor(eColors.getElementsByTagName("highlight").item(0).getTextContent());
-                StyleConstants.setBackground(highlightAttributes, color);
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

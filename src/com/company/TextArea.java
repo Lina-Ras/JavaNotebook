@@ -81,15 +81,12 @@ public class TextArea extends JTextPane{
         }
     }
     private final DefaultStyledDocument document;
-    private void updateTheme(){}
 
-    TextArea(){
+    TextArea() throws BadLocationException {
         document = new DefaultStyledDocument();
         setDocument(document);
         txt = new ArrayList<>();
-        setBackground(Theme.bgTextArea);
-        setFont(Theme.defaultFont);
-        setCaretColor(Theme.caret);
+        updateTheme();
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -165,6 +162,13 @@ public class TextArea extends JTextPane{
             str = document.getText(0, document.getLength());
             l = str.indexOf(fword,r);
         }
+        syntaxHighlight();
+    }
+
+    void updateTheme() throws BadLocationException {
+        setBackground(Theme.bgTextArea);
+        setFont(Theme.defaultFont);
+        setCaretColor(Theme.caret);
         syntaxHighlight();
     }
 }

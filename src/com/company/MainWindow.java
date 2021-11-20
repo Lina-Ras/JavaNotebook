@@ -80,7 +80,7 @@ class MainWindow implements ActionListener {
         menu.add(edit);
     }
 
-    MainWindow() {
+    MainWindow() throws BadLocationException {
         w = new JFrame("notebook");
         w.setSize(800, 600);
         w.setLocationRelativeTo(null);
@@ -138,6 +138,22 @@ class MainWindow implements ActionListener {
             }
             case "replaceEdit" -> {
                 Dialog dialog = new Dialog(w, Dialog.REPLACE_DIALOG);
+            }
+            case "Spring" -> {
+                Theme.updateThemeXML("Spring");
+                try {
+                    textArea.updateTheme();
+                } catch (BadLocationException badLocationException) {
+                    badLocationException.printStackTrace();
+                }
+            }
+            case "Autumn" -> {
+                Theme.updateThemeXML("Autumn");
+                try {
+                    textArea.updateTheme();
+                } catch (BadLocationException badLocationException) {
+                    badLocationException.printStackTrace();
+                }
             }
         }
     }

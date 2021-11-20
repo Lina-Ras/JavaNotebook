@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <themes>
     <theme name="Spring">
+        <colors>
+            <caret>12,12,12</caret>
+            <bgTextArea>45,45,45</bgTextArea>
+            <bgMenu>12,43,34</bgMenu>
+            <bgMenuItem>12,43,34</bgMenuItem>
+            <highlight>34,55,35</highlight>
+        </colors>
         <WordsAttributes type="key">
             <bg>0,255,0</bg>
             <fg>13,80,5</fg>
@@ -16,7 +23,7 @@
             <words>ty,AAAAA</words>
         </WordsAttributes>
         <WordsAttributes type="default">
-            <bg>0,0,0</bg>
+            <bg>none</bg>
             <fg>255,0,255</fg>
             <bold>false</bold>
             <italic>false</italic>
@@ -27,15 +34,15 @@
             <type>Font.PLAIN</type>
             <size>18</size>
         </defaultFont>
-        <colors>
-            <caret>12,12,12</caret>
-            <bgTextArea>45,45,45</bgTextArea>
-            <bgMenu>12,43,34</bgMenu>
-            <bgMenuItem>12,43,34</bgMenuItem>
-            <highlight>34,55,35</highlight>
-        </colors>
     </theme>
     <theme name="Autumn">
+        <colors>
+            <caret>12,12,12</caret>
+            <bgTextArea>245,245,45</bgTextArea>
+            <bgMenu>12,43,34</bgMenu>
+            <bgMenuItem>12,43,34</bgMenuItem>
+            <highlight>34,25,35</highlight>
+        </colors>
         <WordsAttributes type="key">
             <bg>0,0,0</bg>
             <fg>13,80,5</fg>
@@ -62,12 +69,5 @@
             <type>Font.PLAIN</type>
             <size>18</size>
         </defaultFont>
-        <colors>
-            <caret>12,12,12</caret>
-            <bgTextArea>245,245,45</bgTextArea>
-            <bgMenu>12,43,34</bgMenu>
-            <bgMenuItem>12,43,34</bgMenuItem>
-            <highlight>34,25,35</highlight>
-        </colors>
     </theme>
 </themes>

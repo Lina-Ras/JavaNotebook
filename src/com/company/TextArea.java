@@ -28,8 +28,9 @@ public class TextArea extends JTextPane{
             ++end;
         }
         String toInsert = txt.substring(start, end);
-        document.insertString(end, '\n'+toInsert, null);
-        syntaxLineHighlight();
+        toInsert.replaceAll("\n","");
+        document.insertString(start + toInsert.length(), '\n'+toInsert, null);
+        syntaxHighlight();
     }
     private void save() throws BadLocationException {
         File file = new File(path);
